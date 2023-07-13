@@ -1,0 +1,154 @@
+spring:
+  datasource:
+    hikari:
+      pool-name: erupt-mysql
+      minimum-idle: 10
+      maximum-pool-size: 10
+      dle-timeout: 1800000
+      auto-commit: true
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+    type: com.zaxxer.hikari.HikariDataSource
+    driverClassName : com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.56.11:13306/erupt?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: Root@123
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    open-in-view: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
+  hibernate:
+    ddl-auto: update
+  redis:
+    database: 0
+    timeout: 10000
+    host: 192.168.56.11
+    port: 6379
+#  main:
+#    allow-circular-references: true
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  reactor:
+    debug-agent:
+      enabled: true
+server:
+  port: 8000
+  # 启用 gzip 压缩
+  compression:
+    mime-types: application/javascript,text/css,application/json,application/xml,text/html,text/xml,text/plain
+    enabled: true
+  error:
+    includeException: true
+    includeStacktrace: ALWAYS
+    includeMessage: ALWAYS
+#pagehelper:
+#  helperDialect: mysql
+#  reasonable: true
+#  supportMethodsArguments: true
+#  params: count=countSql
+magic-api:
+  web: /magic/web
+  # 接口配置文件存放路径
+  resource.location: D:/erupt/magic-script
+#  resource: #配置存储方式
+#    type: database # 配置存储在数据库中
+#    tableName: magic_api_file # 数据库中的表名
+#    datasource: default #指定数据源（单数据源时无需配置，多数据源时默认使用主数据源，如果存在其他数据源中需要指定。）
+#    prefix: /magic-api # key前缀
+#    readonly: false # 是否是只读模式
+#  auto-import-module: db  # 自动导入的模块
+#  auto-import-package: java.lang.*,java.util.* #自动导包
+#  allow-override: false #禁止覆盖应用接口
+#  sql-column-case: camel #启用驼峰命名转换
+#  editor-config: classpath:./magic-editor.js #编辑器配置
+#  support-cross-domain: true # 跨域支持，默认开启
+#  secret-key: 123456789 # 远程推送时的秘钥，未配置则不开启推送
+#  push-path: /_magic-api-sync #远程推送的路径，默认为/_magic-api-sync
+#  show-sql: true #配置打印SQL
+#  compile-cache-size: 500 #配置编译缓存容量
+#  persistence-response-body: true #是否持久化保存ResponseBody
+#  date-pattern: # 配置请求参数支持的日期格式
+#    - yyyy-MM-dd
+#    - yyyy-MM-dd HH:mm:ss
+#    - yyyyMMddHHmmss
+#    - yyyyMMdd
+#  response: |- #配置JSON格式，格式为magic-script中的表达式
+#    {
+#      code: code,
+#      message: message,
+#      data,
+#      timestamp,
+#      requestTime,
+#      executeTime,
+#    }
+#  response-code:
+#    success: 1 #执行成功的code值
+#    invalid: 0 #参数验证未通过的code值
+#    exception: -1 #执行出现异常的code值
+#  banner: true # 打印banner
+#  thread-pool-executor-size: 8 # async语句的线程池大小
+#  throw-exception: false #执行出错时是否抛出异常
+#  backup: #备份相关配置
+#    enable: true #是否启用
+#    max-history: -1 #备份保留天数，-1为永久保留
+#    datasource: magic  #指定数据源（单数据源时无需配置，多数据源时默认使用主数据源，如果存在其他数据源中需要指定。）
+#    table-name: magic_api_backup #使用数据库存储备份时的表名
+#  crud: # CRUD相关配置
+#    logic-delete-column: deleted #逻辑删除列
+#    logic-delete-value: 1 #逻辑删除值
+#  cache: # 缓存相关配置
+#    capacity: 10000 #缓存容量
+#    ttl: -1 # 永不过期
+#    enable: true # 启用缓存
+#  page:
+#    size: size # 页大小的参数名称
+#    page: page # 页码的参数名称
+#    default-page: 1 # 未传页码时的默认首页
+#    default-size: 10 # 未传页大小时的默认页大小
+#  security:  # 安全配置
+#    username: admin # 登录用的用户名
+#    password: 123456 # 登录用的密码
+#  swagger:
+#    version: 1.0
+#    description: MagicAPI 接口信息
+#    title: MagicAPI Swagger Docs
+#    name: MagicAPI 接口
+#    location: /v2/api-docs/magic-api/swagger2.json
+#  debug:
+#    timeout: 60 # 断点超时时间，默认60s
+erupt-app:
+  # 是否开启水印
+  waterMark: true
+  # 登录失败几次出现验证码，值为0时表示一直需要登录验证码
+  verifyCodeCount: 2
+  # 登录密码是否加密传输，特殊场景如：LDAP登录可关闭该功能获取密码明文
+  pwdTransferEncrypt: true
+  # 多语言配置，默认支持：简体中文、繁体中文、英文、日文；具体配置详见erupt-i18n模块
+  locales: [ "zh-CN","zh-TW","en-US","ja-JP"]
+erupt:
+  # 是否开启csrf防御
+  csrfInspect: true
+  # 开启redis方式存储session，默认false，开启后需在配置文件中添加redis配置（同 Spring Boot）
+  redisSession: true
+  # redis session是否自动续期，1.10.8及以上版本支持
+  redisSessionRefresh: true
+  # 附件上传存储路径, 默认路径为：/opt/erupt-attachment
+  uploadPath: D:/erupt/pictures
+  # 是否保留上传文件原始名称
+  keepUploadFileName: false
+  # 项目初始化方式，默认值 file，1.10.10及以上版本支持，可选值：
+  # NONE  不执行初始化代码
+  # EVERY 每次启动都进行初始化
+  # FILE  通过标识文件判断是否需要初始化
+  initMethodEnum: file
+
+  # 是否开启任务调度（导入erupt-job时有效）
+  job.enable: true
+  # 是否记录操作日志，默认true，该功能开启后可在【系统管理 → 操作日志】中查看操作日志
+  security.recordOperateLog: true
